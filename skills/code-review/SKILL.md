@@ -1,10 +1,10 @@
 ---
 name: code-review
-description: Review the current branch's code changes for bugs and correctness issues using GPT 5.4 with extra-high reasoning. Use when the user asks to review code, review a branch, or run a code review after verifying things work in the browser.
+description: Review the current branch's code changes for bugs and correctness issues using GPT 5.5 with extra-high reasoning. Use when the user asks to review code, review a branch, or run a code review after verifying things work in the browser.
 disable-model-invocation: true
 ---
 # Code Review
-Performs a thorough code review of the current branch's diff against the base branch, using OpenAI GPT 5.4 with extra-high reasoning for maximum analysis depth.
+Performs a thorough code review of the current branch's diff against the base branch, using OpenAI GPT 5.5 with extra-high reasoning for maximum analysis depth.
 **IMPORTANT:** This review MUST run in a sub-agent because the current session uses a different provider (Anthropic) and cannot switch to OpenAI mid-session. You must use the `delegate` tool immediately — do NOT attempt to switch the current session's model.
 > Note: The `delegate` tool is only available in task sessions. If this is a scratch/assistant session, tell the user you need to run this from a task session.
 
@@ -23,13 +23,13 @@ If the diff is very large, also get a summary:
 git diff --stat $(git merge-base HEAD origin/<base_branch>)..HEAD
 ```
 
-### 2. Delegate to a sub-agent with GPT 5.4 xhigh
-Use the `delegate` tool to spawn a sub-session. Set the model to `openai-codex/gpt-5.4` with `xhigh` thinking level. Pass the **entire review prompt below** with the diff inserted as the delegation prompt.
+### 2. Delegate to a sub-agent with GPT 5.5 xhigh
+Use the `delegate` tool to spawn a sub-session. Set the model to `openai-codex/gpt-5.5` with `xhigh` thinking level. Pass the **entire review prompt below** with the diff inserted as the delegation prompt.
 The delegate call should look like:
 ```
 delegate(
   prompt: "<the full review prompt below with diff inserted>",
-  model: "gpt-5.4",
+  model: "gpt-5.5",
   provider: "openai-codex",
   thinkingLevel: "xhigh"
 )
